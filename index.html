@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="ru" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kizomba Infinity Festival Moscow 2026</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Montserrat:wght@700;800&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #0f172a; color: white; }
+        h1, h2, h3 { font-family: 'Montserrat', sans-serif; }
+        .glass { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1); }
+        .accent-blue { color: #3b82f6; }
+        .bg-accent-blue { background-color: #3b82f6; }
+        .btn-gradient { background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%); transition: transform 0.2s; }
+        .btn-gradient:hover { transform: scale(1.05); }
+    </style>
+</head>
+<body x-data="festivalData()">
+
+    <!-- NAV -->
+    <nav class="fixed w-full z-50 glass">
+        <div class="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
+            <div class="font-extrabold text-xl tracking-tighter" x-text="config.event.name"></div>
+            <div class="hidden md:flex space-x-6 text-sm uppercase tracking-widest">
+                <a href="#about" class="hover:text-blue-400">О нас</a>
+                <a href="#teachers" class="hover:text-blue-400">Преподаватели</a>
+                <a href="#schedule" class="hover:text-blue-400">Программа</a>
+                <a href="#prices" class="hover:text-blue-400">Цены</a>
+            </div>
+            <button @click="openModal()" class="btn-gradient px-6 py-2 rounded-full text-sm font-bold">Купить Pass</button>
+        </div>
+    </nav>
+
+    <!-- HERO SECTION -->
+    <header class="relative h-screen flex items-center justify-center overflow-hidden">
+        <div class="absolute inset-0 z-0">
+            <!-- Заглушка фона -->
+            <img src="https://images.unsplash.com/photo-1504609773096-104ff2c73ba4?auto=format&fit=crop&q=80&w=2000" class="w-full h-full object-cover opacity-40" alt="Kizomba">
+            <div class="absolute inset-0 bg-gradient-to-t from-[#0f172a] via-transparent to-transparent"></div>
+        </div>
+        
+        <div class="relative z-10 text-center px-4 max-w-4xl">
+            <div class="mb-4 inline-block px-4 py-1 border border-blue-500 text-blue-400 rounded-full text-sm font-semibold uppercase tracking-widest" x-text="config.event.dates"></div>
+            <h1 class="text-5xl md:text-7xl font-black mb-6 leading-tight" x-text="config.event.name"></h1>
+            <p class="text-lg md:text-2xl mb-10 text-gray-300 font-light" x-text="config.event.heroSubtitle"></p>
+            <div class="flex flex-col md:flex-row items-center justify-center gap-4">
+                <button @click="openModal()" class="btn-gradient px-10 py-4 rounded-xl text-lg font-bold w-full md:w-auto">Купить Pass</button>
+                <div class="flex items-center text-gray-400">
+                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                    <span x-text="config.event.location"></span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- ABOUT SECTION -->
+    <section id="about" class="py-24 max-w-7xl mx-auto px-4">
+        <div class="grid md:grid-cols-2 gap-16 items-center">
+            <div>
+                <h2 class="text-4xl font-bold mb-8">О фестивале</h2>
+                <div class="space-y-4 text-gray-300 leading-relaxed">
+                    <p x-text="config.about.p1"></p>
+                    <p x-text="config.about.p2"></p>
+                </div>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <template x-for="benefit in config.about.benefits">
+                    <div class="glass p-6 rounded-2xl">
+                        <div class="text-blue-500 mb-3" x-html="benefit.icon"></div>
+                        <div class="font-bold text-lg" x-text="benefit.text"></div>
+                    </div>
+                </template>
+            </div>
+        </div>
+    </section>
+
+    <!-- TEACHERS SECTION -->
+    <section id="teachers" class="py-24 bg-slate-900/50">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <h2 class="text-4xl font-bold mb-16">Преподаватели</h2>
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+                <template x-for="item in config.teachers">
+                    <div class="group">
+                        <div class="relative overflow-hidden rounded-2xl aspect-[3/4] mb-4">
+                            <img :src="item.photo" class="w-full h-full object-cover transition duration-500 group-hover:scale-110" :alt="item.name">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent flex flex-col justify-end p-6 text-left">
+                                <div class="font-bold text-xl" x-text="item.name"></div>
+                                <div class="text-sm text-blue-400" x-text="item.style"></div>
+                            </div>
+                        </div>
+                    </div>
+                </template>
+            </div>
+        </div>
+    </section>
+
+    <!-- SCHEDULE SECTION -->
+    <section id="schedule" class="py-24 max-w-5xl mx-auto px-4" x-data="{ activeTab: 0 }">
+        <h2 class="text-4xl font-bold mb-12 text-center">Программа</h2>
+        
+        <div class="flex justify-center mb-10 overflow-x-auto pb-4 space-x-2">
+            <template x-for="(day, index) in config.schedule">
+                <button @click="activeTab = index" 
+                    :class="activeTab === index ? 'bg-blue-600' : 'glass'"
+                    class="px-6 py-3 rounded-full whitespace-nowrap transition"
+                    x-text="day.date">
+                </button>
+            </template>
+        </div>
+
+        <div class="space-y-4">
+            <template x-for="slot in config.schedule[activeTab].slots">
+                <div class="glass p-5 rounded-2xl flex flex-col md:flex-row md:items-center justify-between gap-4">
+                    <div class="flex items-center">
+                        <span class="text-blue-400 font-bold w-32" x-text="slot.time"></span>
+                        <span class="text-xl font-medium" x-text="slot.title"></span>
+                    </div>
+                    <div class="text-sm text-gray-400 flex items-center">
+                        <svg class="w-4 h-4 mr-1 opacity-50" fill="currentColor" viewBox="0 0 20 20"><path d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z"></path></svg>
+                        <span x-text="slot.room"></span>
+                    </div>
+                </div>
+            </template>
+        </div>
+    </section>
+
+    <!-- DRESS CODE SECTION -->
+    <section id="dresscode" class="py-24 bg-slate-900/50">
+        <div class="max-w-7xl mx-auto px-4">
+            <h2 class="text-4xl font-bold mb-16 text-center">Dress Code</h2>
+            <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <template x-for="code in config.dresscode">
+                    <div class="glass overflow-hidden rounded-3xl flex flex-col h-full">
+                        <div class="h-48 overflow-hidden">
+                            <img :src="code.image" class="w-full h-full object-cover opacity-80" :alt="code.theme">
+                        </div>
+                        <div class="p-6">
+                            <div class="text-blue-400 text-xs font-bold uppercase mb-2" x-text="code.day"></div>
+                            <h3 class="text-xl font-bold mb-3" x-text="code.theme"></h3>
+                            <p class="text-sm text-gray-400" x-text="code.desc"></p>
+                        </div>
+                    </div>
+                </template>
+            </div>
+        </div>
+    </section>
+
+    <!-- PRICES SECTION -->
+    <section id="prices" class="py-24 max-w-7xl mx-auto px-4 text-center">
+        <h2 class="text-4xl font-bold mb-6">Пассы и стоимость</h2>
+        <p x-show="config.prices.showBalanceWarning" class="text-amber-400 text-sm mb-12 max-w-xl mx-auto" x-text="config.prices.warningText"></p>
+        
+        <div class="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+            <template x-for="pass in config.prices.passes">
+                <div class="glass p-10 rounded-3xl border-2 border-transparent hover:border-blue-500 transition relative flex flex-col">
+                    <h3 class="text-2xl font-bold mb-2" x-text="pass.name"></h3>
+                    <div class="text-4xl font-black text-blue-400 mb-8" x-text="pass.price + ' ₽'"></div>
+                    <ul class="text-left space-y-4 mb-10 flex-grow">
+                        <template x-for="feature in pass.included">
+                            <li class="flex items-start text-gray-300">
+                                <svg class="w-5 h-5 text-green-500 mr-3 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                                <span x-text="feature"></span>
+                            </li>
+                        </template>
+                    </ul>
+                    <button @click="openModal(pass.id)" class="btn-gradient w-full py-4 rounded-xl font-bold uppercase tracking-wider">Выбрать</button>
+                </div>
+            </template>
+        </div>
+    </section>
+
+    <!-- FOOTER / LOCATION -->
+    <footer class="py-24 border-t border-white/10 glass">
+        <div class="max-w-7xl mx-auto px-4 grid md:grid-cols-3 gap-16">
+            <div>
+                <h3 class="text-xl font-bold mb-6">Локация</h3>
+                <p class="font-bold text-blue-400 mb-2" x-text="config.event.location"></p>
+                <p class="text-gray-400 mb-6" x-text="config.event.address"></p>
+                <div class="w-full h-48 bg-slate-800 rounded-2xl overflow-hidden opacity-50">
+                    <!-- Заглушка карты -->
+                    <div class="w-full h-full flex items-center justify-center text-gray-500 text-xs italic">Яндекс Карта</div>
+                </div>
+            </div>
+            <div>
+                <h3 class="text-xl font-bold mb-6">FAQ</h3>
+                <div class="space-y-4">
+                    <template x-for="faq in config.faq">
+                        <div x-data="{ open: false }" class="border-b border-white/10 pb-4">
+                            <button @click="open = !open" class="flex justify-between w-full text-left font-medium">
+                                <span x-text="faq.q"></span>
+                                <span x-text="open ? '−' : '+'"></span>
+                            </button>
+                            <div x-show="open" class="pt-4 text-sm text-gray-400" x-text="faq.a"></div>
+                        </div>
+                    </template>
+                </div>
+            </div>
+            <div>
+                <h3 class="text-xl font-bold mb-6">Контакты</h3>
+                <div class="flex space-x-4 mb-8">
+                    <a href="#" class="w-12 h-12 glass rounded-full flex items-center justify-center hover:bg-blue-600 transition">TG</a>
+                    <a href="#" class="w-12 h-12 glass rounded-full flex items-center justify-center hover:bg-blue-600 transition">WA</a>
+                    <a href="#" class="w-12 h-12 glass rounded-full flex items-center justify-center hover:bg-blue-600 transition">IG</a>
+                </div>
+                <p class="text-xs text-gray-500">© 2026 Kizomba Infinity Festival Team</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- MODAL: PURCHASE STEPPER -->
+    <div x-show="modalOpen" class="fixed inset-0 z-[100] flex items-center justify-center p-4">
+        <div @click="closeModal()" class="absolute inset-0 bg-black/90 backdrop-blur-md"></div>
+        <div class="relative glass bg-slate-900 w-full max-w-xl rounded-3xl p-8 shadow-2xl overflow-hidden" @click.away="closeModal()">
+            
+            <!-- Step 1: Pass Type -->
+            <div x-show="modalStep === 1">
+                <h2 class="text-2xl font-bold mb-6">Выберите тип пасса</h2>
+                <div class="space-y-4">
+                    <template x-for="pass in config.prices.passes">
+                        <button @click="selectPass(pass)" class="w-full text-left p-6 glass rounded-2xl border-2 border-transparent hover:border-blue-500 transition">
+                            <div class="flex justify-between items-center">
+                                <div>
+                                    <div class="font-bold text-xl" x-text="pass.name"></div>
+                                    <div class="text-blue-400" x-text="pass.price + ' ₽'"></div>
+                                </div>
+                                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20"><path d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"></path></svg>
+                            </div>
+                        </button>
+                    </template>
+                </div>
+            </div>
+
+            <!-- Step 2: Category -->
+            <div x-show="modalStep === 2">
+                <button @click="modalStep = 1" class="text-gray-400 text-sm mb-4 flex items-center">← Назад</button>
+                <h2 class="text-2xl font-bold mb-2">Кто вы?</h2>
+                <p class="text-gray-400 text-sm mb-6" x-text="'Выбран: ' + selectedPass?.name"></p>
+                
+                <div class="grid grid-cols-1 gap-3">
+                    <template x-for="cat in config.categories">
+                        <button @click="goToPayment(cat)" class="p-4 glass rounded-xl border border-white/10 hover:bg-blue-600 transition flex justify-between items-center">
+                            <span class="font-bold" x-text="cat.label"></span>
+                            <span class="text-xs opacity-60">Перейти к оплате</span>
+                        </button>
+                    </template>
+                </div>
+            </div>
+
+            <button @click="closeModal()" class="absolute top-6 right-6 text-gray-500 hover:text-white">✕</button>
+        </div>
+    </div>
+
+    <script>
+        const CONFIG = {
+            event: {
+                name: "Kizomba Infinity Festival",
+                dates: "3–5 апреля 2026",
+                location: "МонАрх Москва Отель",
+                address: "Москва, Ленинградский пр-т, 31А, стр. 1",
+                heroSubtitle: "Фестиваль‑легенда кизомбы: tarraxo, douceur, urbankiz, tangokiz, afrokiz"
+            },
+            about: {
+                p1: "Kizomba Infinity Festival — это ежегодное событие в сердце Москвы, объединяющее лучших танцоров и преподавателей Европы и России. Мы создаем пространство, где стираются границы между стилями.",
+                p2: "Три дня погружения в музыку, технику и социальное взаимодействие в роскошных залах 5-звездочного отеля МонАрх.",
+                benefits: [
+                    { icon: '💎', text: "3 дня МК и 3 ночи вечеринок" },
+                    { icon: '🌍', text: "Европейские DJ и профи" },
+                    { icon: '⚔️', text: "Couple & Solo Battles" },
+                    { icon: '⭐', text: "Локация — 5* Отель" }
+                ]
+            },
+            schedule: [
+                {
+                    date: "ЧТ, 2 АПР",
+                    slots: [
+                        { time: "22:00 – 04:00", title: "Pre-party (Welcome Dance)", room: "Small Hall" }
+                    ]
+                },
+                {
+                    date: "ПТ, 3 АПР",
+                    slots: [
+                        { time: "15:00 – 20:00", title: "Social room", room: "Foyer" },
+                        { time: "16:00 – 19:00", title: "Мастер-классы", room: "Workshop Zone" },
+                        { time: "23:00 – 07:00", title: "Party", room: "Main Hall" }
+                    ]
+                },
+                {
+                    date: "СБ, 4 АПР",
+                    slots: [
+                        { time: "12:00 – 17:00", title: "Мастер-классы", room: "Workshop Zone" },
+                        { time: "14:00 – 20:00", title: "Social room", room: "Foyer" },
+                        { time: "17:00 – 20:00", title: "Battles (Couple & Solo)", room: "Arena" },
+                        { time: "23:00 – 07:00", title: "Grand Party", room: "Main Hall" }
+                    ]
+                },
+                {
+                    date: "ВС, 5 АПР",
+                    slots: [
+                        { time: "12:00 – 17:00", title: "Мастер-классы", room: "Workshop Zone" },
+                        { time: "14:00 – 20:00", title: "Social room", room: "Foyer" },
+                        { time: "23:00 – 06:00", title: "Last Night Party", room: "Main Hall" }
+                    ]
+                }
+            ],
+            teachers: [
+                { name: "DJ Pingusso", style: "Tarraxo / Urbankiz", photo: "https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?w=400&h=500&fit=crop", country: "Europe" },
+                { name: "DJ Stefanio Lima", style: "Kizomba Fusion", photo: "https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?w=400&h=500&fit=crop", country: "Europe" },
+                { name: "DJ Nice Life", style: "Douceur", photo: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400&h=500&fit=crop", country: "Europe" },
+                { name: "DJ Paraiso", style: "AfroKiz", photo: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=500&fit=crop", country: "Europe" }
+            ],
+            dresscode: [
+                { day: "Четверг", theme: "Blue & Sky", image: "https://images.unsplash.com/photo-1516062423079-7ca13cdc7f5a?w=400&q=80", desc: "Все оттенки голубого и глубокого синего." },
+                { day: "Пятница", theme: "Hollywood", image: "https://images.unsplash.com/photo-1485846234645-a62644f84728?w=400&q=80", desc: "Элегантность красной ковровой дорожки." },
+                { day: "Суббота", theme: "Glossy Diamond", image: "https://images.unsplash.com/photo-1515169067868-5387ec356754?w=400&q=80", desc: "Блеск, камни, серебро и ослепительный свет." },
+                { day: "Воскресенье", theme: "Boho Style", image: "https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=400&q=80", desc: "Этнические узоры, натуральные ткани, свобода." }
+            ],
+            prices: {
+                showBalanceWarning: true,
+                warningText: "Организатор оставляет за собой право закрыть продажи женских пассов для сохранения баланса по парам.",
+                passes: [
+                    { id: 'full', name: 'Full Pass', price: 9800, included: ['Все мастер-классы (3 дня)', 'Все вечеринки (Пт-Вс)', 'Social Room каждый день', 'Участие в баттлах'] },
+                    { id: 'social', name: 'Social Pass', price: 7200, included: ['Все вечеринки (Пт-Вс)', 'Social Room каждый день', 'Баттлы (как зритель)'] }
+                ]
+            },
+            categories: [
+                { id: 'man', label: 'Партнер (Man)', url: 'https://payment-link.com/man' },
+                { id: 'lady', label: 'Партнерша (Lady)', url: 'https://payment-link.com/lady' },
+                { id: 'couple', label: 'Пара (Couple)', url: 'https://payment-link.com/couple' }
+            ],
+            faq: [
+                { q: "Где лучше бронировать проживание?", a: "Мы рекомендуем останавливаться непосредственно в МонАрх Москва Отель. Для участников фестиваля действует спеццена по промокоду KIZ2026." },
+                { q: "Как происходит возврат билетов?", a: "Билеты являются невозвратными, но возможна бесплатная перерегистрация (change name) до 20 марта." }
+            ]
+        };
+
+        function festivalData() {
+            return {
+                config: CONFIG,
+                modalOpen: false,
+                modalStep: 1,
+                selectedPass: null,
+
+                openModal(passId = null) {
+                    if (passId) {
+                        this.selectedPass = this.config.prices.passes.find(p => p.id === passId);
+                        this.modalStep = 2;
+                    } else {
+                        this.modalStep = 1;
+                    }
+                    this.modalOpen = true;
+                },
+
+                closeModal() {
+                    this.modalOpen = false;
+                    this.selectedPass = null;
+                },
+
+                selectPass(pass) {
+                    this.selectedPass = pass;
+                    this.modalStep = 2;
+                },
+
+                goToPayment(cat) {
+                    // В будущем здесь будет переход по ссылке из конфига
+                    alert(`Переход к оплате: ${this.selectedPass.name} (${cat.label}). Ссылка: ${cat.url}`);
+                    this.closeModal();
+                }
+            }
+        }
+    </script>
+</body>
+</html>
