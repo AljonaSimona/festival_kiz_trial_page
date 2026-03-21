@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="ru" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="INFINITY KIZOMBA FESTIVAL MOSCOW 2026 — 3 дня мастер-классов, вечеринок и social rooms в MonArch Hotel, Москва.">
+    <meta name="robots" content="index, follow">
+    <meta name="theme-color" content="#0A0F14">
+    <link rel="canonical" href="https://infinitykiz.com/">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="INFINITY KIZOMBA FESTIVAL MOSCOW 2026">
+    <meta property="og:description" content="3–5 апреля 2026, MonArch Hotel, Москва. Urban Kiz, Tarraxo, Douceur, вечеринки и мастер-классы.">
+    <meta property="og:url" content="https://infinitykiz.com/">
+    <meta property="og:image" content="https://images.unsplash.com/photo-1504609773096-104ff2c73ba4?auto=format&fit=crop&q=80&w=2000">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="INFINITY KIZOMBA FESTIVAL MOSCOW 2026">
+    <meta name="twitter:description" content="3–5 апреля 2026, MonArch Hotel, Москва.">
+    <meta name="twitter:image" content="https://images.unsplash.com/photo-1504609773096-104ff2c73ba4?auto=format&fit=crop&q=80&w=2000">
+    <title>INFINITY KIZOMBA FESTIVAL MOSCOW 2026</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
+    <script type="application/ld+json">
+        {
+          "@context": "https://schema.org",
+          "@type": "Event",
+          "name": "INFINITY KIZOMBA FESTIVAL MOSCOW 2026",
+          "startDate": "2026-04-03T12:00:00+03:00",
+          "endDate": "2026-04-05T23:59:00+03:00",
+          "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+          "eventStatus": "https://schema.org/EventScheduled",
+          "image": [
+            "https://images.unsplash.com/photo-1504609773096-104ff2c73ba4?auto=format&fit=crop&q=80&w=2000"
+          ],
+          "description": "Фестиваль Kizomba в Москве: мастер-классы, вечеринки, баттлы и social rooms.",
+          "location": {
+            "@type": "Place",
+            "name": "MonArch Hotel",
+            "address": {
+              "@type": "PostalAddress",
+              "streetAddress": "Ленинградский проспект, 31А",
+              "addressLocality": "Москва",
+              "addressCountry": "RU"
+            }
+          },
+          "organizer": {
+            "@type": "Organization",
+            "name": "INFINITY KIZOMBA FESTIVAL",
+            "email": "hello@infinitykiz.com"
+          },
+          "offers": {
+            "@type": "Offer",
+            "priceCurrency": "RUB",
+            "availability": "https://schema.org/InStock",
+            "url": "https://infinitykiz.com/#passes"
+          }
+        }
+    </script>
+    
+    <style>
+        :root {
+            --color-deep-navy: #0A0F14;
+            --color-accent-blue: #0047FF;
+            --color-chrome: #E5E7EB;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--color-deep-navy);
+            color: white;
+        }
+        .font-fashion { font-family: 'Playfair Display', serif; }
+        .glass { background: rgba(255, 255, 255, 0.03); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); }
+        .text-gradient { background: linear-gradient(to right, #fff, #9ca3af); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+        .card-hover { transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+        .card-hover:hover { transform: translateY(-10px); border-color: var(--color-accent-blue); }
+        [x-cloak] { display: none !important; }
+    </style>
+</head>
+<body x-data="festivalApp()" class="antialiased overflow-x-hidden">
+
+    <!-- NAVIGATION -->
+    <nav class="fixed w-full z-50 transition-all duration-500 border-b border-white/5" 
+         :class="scrolled ? 'py-4 glass' : 'py-8 bg-transparent'"
+         @scroll.window="scrolled = (window.pageYOffset > 50) ? true : false">
+        <div class="container mx-auto px-6 flex justify-between items-center">
+            <div class="text-xl font-fashion tracking-widest">INFINITY</div>
+            
+            <div class="hidden md:flex space-x-8 uppercase text-[10px] tracking-[0.2em] font-semibold">
+                <a href="#schedule" class="hover:text-blue-500 transition" x-text="t('nav.schedule')"></a>
+                <a href="#lineup" class="hover:text-blue-500 transition" x-text="t('nav.lineup')"></a>
+                <a href="#passes" class="hover:text-blue-500 transition" x-text="t('nav.passes')"></a>
+                <a href="#venue" class="hover:text-blue-500 transition" x-text="t('nav.venue')"></a>
+            </div>
+
+            <div class="flex items-center space-x-6">
+                <div class="flex space-x-2 text-xs font-bold border border-white/20 rounded-full p-1">
+                    <button type="button" @click="lang = 'en'" :class="lang === 'en' ? 'bg-white text-black' : ''" class="px-3 py-1 rounded-full transition">EN</button>
+                    <button type="button" @click="lang = 'ru'" :class="lang === 'ru' ? 'bg-white text-black' : ''" class="px-3 py-1 rounded-full transition">RU</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HERO SECTION -->
+    <section class="relative min-h-screen flex items-center justify-center overflow-hidden">
+        <!-- Background Placeholder for Premium Visual -->
+        <div class="absolute inset-0 z-0">
+            <div class="absolute inset-0 bg-gradient-to-b from-transparent via-[#0A0F14]/60 to-[#0A0F14]"></div>
+            <img src="https://images.unsplash.com/photo-1504609773096-104ff2c73ba4?auto=format&fit=crop&q=80&w=2000" 
+                 class="w-full h-full object-cover opacity-40 grayscale" alt="Танцевальный фестиваль Kizomba в Москве">
+        </div>
+
+        <div class="container mx-auto px-6 relative z-10 text-center pt-20">
+            <h2 class="text-blue-600 font-semibold tracking-[0.5em] mb-4 text-xs md:text-sm uppercase animate-fade-in" x-text="t('hero.subtitle')"></h2>
+            <h1 class="text-7xl md:text-[12rem] font-fashion leading-none mb-8 tracking-tighter italic text-gradient" x-text="t('hero.title')"></h1>
+            
+            <div class="flex flex-col md:flex-row items-center justify-center gap-6 md:gap-12 mb-12">
+                <div class="text-left">
+                    <p class="text-2xl md:text-4xl font-light" x-text="t('hero.date')"></p>
+                    <p class="text-white/50 text-sm uppercase tracking-widest" x-text="t('hero.preparty')"></p>
+                </div>
+                <div class="w-px h-12 bg-white/20 hidden md:block"></div>
+                <div class="text-left">
+                    <p class="text-2xl md:text-4xl font-light uppercase">MonArch Hotel</p>
+                    <p class="text-white/50 text-sm uppercase tracking-widest">Moscow, Russia</p>
+                </div>
+            </div>
+
+            <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                <a href="#passes" class="px-12 py-5 bg-white text-black font-bold uppercase text-xs tracking-widest hover:bg-blue-600 hover:text-white transition-all duration-300 w-full sm:w-auto text-center" x-text="t('hero.cta')"></a>
+                <a href="#schedule" class="px-12 py-5 border border-white/20 text-white font-bold uppercase text-xs tracking-widest hover:bg-white hover:text-black transition-all duration-300 w-full sm:w-auto text-center" x-text="t('hero.secondaryCta')"></a>
+            </div>
+        </div>
+
+        <!-- Scroll Indicator -->
+        <div class="absolute bottom-10 left-1/2 -translate-x-1/2 animate-bounce opacity-30">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
+        </div>
+    </section>
+
+    <!-- ABOUT SECTION -->
+    <section id="about" class="py-24 border-y border-white/5 bg-black/20">
+        <div class="container mx-auto px-6">
+            <div class="grid md:grid-cols-2 gap-16 items-center">
+                <div>
+                    <span class="text-blue-600 text-xs font-bold tracking-[0.3em] uppercase mb-4 block">01 / Concept</span>
+                    <h3 class="text-4xl md:text-5xl font-fashion italic mb-8" x-html="t('about.heading')"></h3>
+                    <p class="text-white/60 leading-relaxed mb-8 max-w-md" x-text="t('about.text')"></p>
+                    <div class="flex flex-wrap gap-4">
+                        <template x-for="style in ['Urban Kiz', 'Tarraxo', 'Douceur', 'TangoKiz', 'AfroKiz']">
+                            <span class="text-[10px] border border-white/10 px-4 py-2 rounded-full uppercase tracking-widest" x-text="style"></span>
+                        </template>
+                    </div>
+                </div>
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="aspect-[3/4] bg-zinc-900 overflow-hidden mt-12">
+                        <img src="https://images.unsplash.com/photo-1547153760-18fc86324498?auto=format&fit=crop&q=80&w=800" class="w-full h-full object-cover grayscale opacity-60" alt="Танцевальная пара на фестивале" loading="lazy">
+                    </div>
+                    <div class="aspect-[3/4] bg-zinc-900 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?auto=format&fit=crop&q=80&w=800" class="w-full h-full object-cover grayscale opacity-60" alt="Гости танцевального события" loading="lazy">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- LINE-UP SECTION -->
+    <section id="lineup" class="py-24">
+        <div class="container mx-auto px-6">
+            <div class="flex justify-between items-end mb-16">
+                <div>
+                    <span class="text-blue-600 text-xs font-bold tracking-[0.3em] uppercase mb-2 block">02 / Line-up</span>
+                    <h2 class="text-5xl md:text-7xl font-fashion italic" x-text="t('lineup.teachersTitle')"></h2>
+                </div>
+            </div>
+
+            <!-- Teachers Grid -->
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-8 mb-24">
+                <template x-for="item in data.content.teachers" :key="item.name">
+                    <div class="group">
+                        <div class="aspect-[4/5] bg-zinc-900 mb-4 overflow-hidden relative">
+                            <img :src="item.img" class="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700" :alt="`${item.name} — ${item.style}`" loading="lazy">
+                            <div class="absolute bottom-0 left-0 p-4 translate-y-full group-hover:translate-y-0 transition-transform duration-300">
+                                <p class="text-[10px] tracking-widest uppercase text-white/70" x-text="item.country"></p>
+                            </div>
+                        </div>
+                        <h4 class="text-lg font-fashion" x-text="item.name"></h4>
+                        <p class="text-[10px] text-white/40 uppercase tracking-[0.2em]" x-text="item.style"></p>
+                    </div>
+                </template>
+            </div>
+
+            <h2 class="text-5xl md:text-7xl font-fashion italic mb-16 text-right" x-text="t('lineup.djsTitle')"></h2>
+            
+            <!-- DJs Grid -->
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
+                <template x-for="dj in data.content.djs" :key="dj.name">
+                    <div class="text-center group">
+                        <div class="w-full aspect-square rounded-full bg-zinc-900 mb-4 overflow-hidden border border-white/5 group-hover:border-blue-500/50 transition-colors">
+                            <img :src="dj.img" class="w-full h-full object-cover grayscale opacity-80" :alt="dj.name" loading="lazy">
+                        </div>
+                        <p class="text-sm font-semibold tracking-wider uppercase" x-text="dj.name"></p>
+                        <p class="text-[9px] text-white/40 tracking-widest uppercase">Resident</p>
+                    </div>
+                </template>
+            </div>
+        </div>
+    </section>
+
+    <!-- SCHEDULE SECTION -->
+    <section id="schedule" class="py-24 bg-zinc-950">
+        <div class="container mx-auto px-6">
+            <div class="max-w-4xl mx-auto">
+                <div class="text-center mb-16">
+                    <h2 class="text-5xl md:text-7xl font-fashion italic mb-4" x-text="t('nav.schedule')"></h2>
+                    <div class="flex justify-center space-x-4">
+                        <template x-for="(day, index) in data.content.schedule" :key="index">
+                            <button type="button" @click="activeDay = index" 
+                                    class="text-xs uppercase tracking-[0.2em] px-6 py-3 transition-all"
+                                    :class="activeDay === index ? 'text-white border-b-2 border-blue-600' : 'text-white/30 hover:text-white'">
+                                <span x-text="day[lang].dayName"></span>
+                            </button>
+                        </template>
+                    </div>
+                    <p class="text-white/50 text-xs uppercase tracking-widest mt-6" x-text="t('schedule.note')"></p>
+                </div>
+
+                <div class="space-y-1">
+                    <template x-for="event in data.content.schedule[activeDay][lang].events">
+                        <div class="flex items-center justify-between p-6 glass border border-white/5 hover:border-white/20 transition-all">
+                            <div class="flex items-center gap-8">
+                                <span class="text-blue-500 font-mono text-sm" x-text="event.time"></span>
+                                <div>
+                                    <h4 class="text-xl font-fashion tracking-wide" x-text="event.title"></h4>
+                                    <p class="text-xs text-white/40 uppercase tracking-widest" x-text="event.desc"></p>
+                                </div>
+                            </div>
+                            <div class="hidden md:block">
+                                <div class="w-2 h-2 rounded-full bg-white/20"></div>
+                            </div>
+                        </div>
+                    </template>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PASSES SECTION -->
+    <section id="passes" class="py-24">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <span class="text-blue-600 text-xs font-bold tracking-[0.3em] uppercase mb-2 block">Registration</span>
+                <h2 class="text-5xl md:text-7xl font-fashion italic" x-text="t('nav.passes')"></h2>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+                <div class="relative p-12 glass border border-white/10 card-hover flex flex-col justify-between">
+                    <div>
+                        <h3 class="text-3xl font-fashion italic mb-2">Full Pass</h3>
+                        <p class="text-white/50 text-xs uppercase tracking-widest mb-8">All inclusive access</p>
+                        <ul class="space-y-4 mb-10">
+                            <li class="flex items-center text-sm gap-3 opacity-80"><svg class="w-4 h-4 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>All Masterclasses (60 min each)</li>
+                            <li class="flex items-center text-sm gap-3 opacity-80"><svg class="w-4 h-4 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>4 Night Parties</li>
+                            <li class="flex items-center text-sm gap-3 opacity-80"><svg class="w-4 h-4 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>Day Social Rooms</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <label class="block text-[10px] uppercase tracking-widest text-white/40 mb-2">Role</label>
+                        <select x-model="selectedGender.full" class="w-full bg-zinc-800 border border-white/10 p-4 text-white mb-6 focus:border-blue-500 outline-none transition">
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                        </select>
+                        <div class="text-5xl font-light mb-8">9800 <span class="text-lg opacity-50">RUB</span></div>
+                        <button type="button" @click="openModalByType('Full Pass', 'full')" class="w-full py-5 bg-white text-black font-bold uppercase text-xs tracking-widest hover:bg-blue-600 hover:text-white transition-all" x-text="t('hero.cta')"></button>
+                    </div>
+                </div>
+
+                <div class="p-12 glass border border-white/5 card-hover flex flex-col justify-between">
+                    <div>
+                        <h3 class="text-3xl font-fashion italic mb-2">Social Pass</h3>
+                        <p class="text-white/50 text-xs uppercase tracking-widest mb-8">Parties & Socials</p>
+                        <ul class="space-y-4 mb-10">
+                            <li class="flex items-center text-sm gap-3 opacity-80"><svg class="w-4 h-4 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>4 Night Parties</li>
+                            <li class="flex items-center text-sm gap-3 opacity-80"><svg class="w-4 h-4 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>Day Social Rooms</li>
+                            <li class="flex items-center text-sm gap-3 opacity-40 italic">— No Workshops included</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <label class="block text-[10px] uppercase tracking-widest text-white/40 mb-2">Role</label>
+                        <select x-model="selectedGender.social" class="w-full bg-zinc-800 border border-white/10 p-4 text-white mb-6 focus:border-blue-500 outline-none transition">
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                        </select>
+                        <div class="text-5xl font-light mb-8">7200 <span class="text-lg opacity-50">RUB</span></div>
+                        <button type="button" @click="openModalByType('Social Pass', 'social')" class="w-full py-5 border border-white/20 text-white font-bold uppercase text-xs tracking-widest hover:bg-white hover:text-black transition-all" x-text="t('hero.cta')"></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- DRESS CODE (MOODBOARD STYLE) -->
+    <section class="py-24 bg-black">
+        <div class="container mx-auto px-6">
+            <h2 class="text-5xl md:text-7xl font-fashion italic mb-16 text-center tracking-tighter">Dress Code</h2>
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4 h-auto md:h-[600px]">
+                <template x-for="code in data.content.dresscode" :key="code.day">
+                    <div class="relative group overflow-hidden h-full min-h-[400px]">
+                        <img :src="code.img" class="w-full h-full object-cover grayscale opacity-40 group-hover:scale-110 group-hover:grayscale-0 transition-all duration-1000" :alt="`Dress code ${code.day}: ${code.title}`" loading="lazy">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent"></div>
+                        <div class="absolute bottom-0 left-0 p-8">
+                            <p class="text-blue-500 text-xs font-bold tracking-widest uppercase mb-2" x-text="code.day"></p>
+                            <h4 class="text-3xl font-fashion italic mb-4" x-text="code.title"></h4>
+                            <div class="flex gap-2">
+                                <template x-for="color in code.colors">
+                                    <div class="w-4 h-4 rounded-full border border-white/20" :style="`background-color: ${color}`"></div>
+                                </template>
+                            </div>
+                        </div>
+                    </div>
+                </template>
+            </div>
+        </div>
+    </section>
+
+    <!-- VENUE SECTION -->
+    <section id="venue" class="py-24 border-t border-white/5 bg-zinc-950/60">
+        <div class="container mx-auto px-6">
+            <div class="max-w-5xl mx-auto text-center">
+                <span class="text-blue-600 text-xs font-bold tracking-[0.3em] uppercase mb-3 block">03 / Venue</span>
+                <h2 class="text-5xl md:text-7xl font-fashion italic mb-6" x-text="t('venue.title')"></h2>
+                <p class="text-white/60 leading-relaxed mb-10" x-text="t('venue.text')"></p>
+                <address class="not-italic text-white/80 text-lg mb-10">MonArch Hotel, Ленинградский проспект, 31А, Москва</address>
+                <div class="grid md:grid-cols-3 gap-4 text-left mb-10">
+                    <div class="glass border border-white/10 p-5">
+                        <p class="text-xs text-blue-500 uppercase tracking-widest mb-2" x-text="t('venue.metroTitle')"></p>
+                        <p class="text-sm text-white/70" x-text="t('venue.metroText')"></p>
+                    </div>
+                    <div class="glass border border-white/10 p-5">
+                        <p class="text-xs text-blue-500 uppercase tracking-widest mb-2" x-text="t('venue.carTitle')"></p>
+                        <p class="text-sm text-white/70" x-text="t('venue.carText')"></p>
+                    </div>
+                    <div class="glass border border-white/10 p-5">
+                        <p class="text-xs text-blue-500 uppercase tracking-widest mb-2" x-text="t('venue.parkingTitle')"></p>
+                        <p class="text-sm text-white/70" x-text="t('venue.parkingText')"></p>
+                    </div>
+                </div>
+                <div class="mb-10 rounded-xl overflow-hidden border border-white/10">
+                    <iframe title="Map: MonArch Hotel Moscow" src="https://yandex.ru/map-widget/v1/?text=MonArch%20Hotel%20Moscow&z=15" width="100%" height="360" frameborder="0"></iframe>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <a href="https://yandex.ru/maps/?text=MonArch%20Hotel%20Moscow" target="_blank" rel="noopener noreferrer" class="px-8 py-4 bg-white text-black font-bold uppercase text-xs tracking-widest hover:bg-blue-600 hover:text-white transition-all" x-text="t('venue.mapCta')"></a>
+                    <a href="mailto:hello@infinitykiz.com" class="px-8 py-4 border border-white/20 font-bold uppercase text-xs tracking-widest hover:bg-white hover:text-black transition-all">hello@infinitykiz.com</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- LEGAL -->
+    <section id="privacy-policy" class="py-16 border-t border-white/5">
+        <div class="container mx-auto px-6 max-w-4xl">
+            <h3 class="text-3xl font-fashion italic mb-4">Privacy Policy</h3>
+            <p class="text-white/60 text-sm leading-relaxed">Мы используем контактные данные только для обработки заявок на участие в фестивале и обратной связи по регистрации. Данные не передаются третьим лицам, кроме случаев, предусмотренных законодательством.</p>
+        </div>
+    </section>
+
+    <section id="public-offer" class="py-16 border-t border-white/5">
+        <div class="container mx-auto px-6 max-w-4xl">
+            <h3 class="text-3xl font-fashion italic mb-4">Public Offer</h3>
+            <p class="text-white/60 text-sm leading-relaxed">Оплата билета подтверждает согласие участника с правилами мероприятия, расписанием и условиями возврата. Организатор вправе вносить изменения в программу при сохранении общего формата события.</p>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="py-24 border-t border-white/5">
+        <div class="container mx-auto px-6">
+            <div class="grid md:grid-cols-4 gap-12 mb-16">
+                <div class="col-span-2">
+                    <h2 class="text-4xl font-fashion italic mb-8">INFINITY</h2>
+                    <p class="text-white/40 text-sm max-w-sm" x-text="t('about.text')"></p>
+                </div>
+                <div>
+                    <h5 class="text-xs font-bold uppercase tracking-widest mb-6">Contact</h5>
+                    <p class="text-sm opacity-60 mb-2">Moscow, Leningradsky Pr, 31A</p>
+                    <a href="mailto:hello@infinitykiz.com" class="text-sm opacity-60 hover:opacity-100 transition">hello@infinitykiz.com</a>
+                </div>
+                <div>
+                    <h5 class="text-xs font-bold uppercase tracking-widest mb-6">Follow Us</h5>
+                    <div class="flex gap-6">
+                        <a href="https://instagram.com/infinitykiz" target="_blank" rel="noopener noreferrer" class="opacity-60 hover:opacity-100 transition">Instagram</a>
+                        <a href="https://t.me/infinitykiz" target="_blank" rel="noopener noreferrer" class="opacity-60 hover:opacity-100 transition">Telegram</a>
+                    </div>
+                </div>
+            </div>
+            <div class="flex flex-col md:flex-row justify-between items-center pt-12 border-t border-white/5 text-[10px] uppercase tracking-widest text-white/20">
+                <p>&copy; 2026 INFINITY KIZOMBA FESTIVAL. ALL RIGHTS RESERVED.</p>
+                <div class="flex gap-8 mt-4 md:mt-0">
+                    <a href="#privacy-policy">Privacy Policy</a>
+                    <a href="#public-offer">Public Offer</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- MOBILE STICKY CTA -->
+    <div class="md:hidden fixed bottom-0 left-0 w-full p-4 z-50 pointer-events-none">
+        <button type="button" @click="openModal('Mobile Quick')" class="pointer-events-auto w-full py-4 bg-blue-600 text-white font-bold uppercase text-[10px] tracking-[0.2em] shadow-2xl" x-text="t('mobile.cta')">
+        </button>
+    </div>
+
+    <!-- MODAL FORM -->
+    <div x-show="showModal" x-cloak class="fixed inset-0 z-[100] flex items-center justify-center p-6">
+        <div class="absolute inset-0 bg-black/90 cursor-pointer" @click="showModal = false"></div>
+        <div class="relative bg-zinc-900 w-full max-w-lg p-12 glass border border-white/10 overflow-y-auto max-h-[90vh]">
+            <button type="button" @click="showModal = false" class="absolute top-6 right-6 text-white/40 hover:text-white" aria-label="Close registration form">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12"></path></svg>
+            </button>
+            <h3 class="text-3xl font-fashion italic mb-8">Registration</h3>
+            <form class="space-y-6" @submit.prevent="submitForm">
+                <div>
+                    <label class="block text-[10px] uppercase tracking-widest text-white/40 mb-2">Full Name</label>
+                    <input type="text" name="fullName" x-model="formData.name" required autocomplete="name" class="w-full bg-white/5 border border-white/10 p-4 text-white focus:border-blue-500 outline-none transition">
+                </div>
+                <div>
+                    <label class="block text-[10px] uppercase tracking-widest text-white/40 mb-2">Telegram / Phone</label>
+                    <input type="text" name="contact" x-model="formData.contact" required autocomplete="tel" class="w-full bg-white/5 border border-white/10 p-4 text-white focus:border-blue-500 outline-none transition">
+                </div>
+                <div>
+                    <label class="block text-[10px] uppercase tracking-widest text-white/40 mb-2">Selected Pass</label>
+                    <select name="pass" x-model="selectedPass" required class="w-full bg-zinc-800 border border-white/10 p-4 text-white focus:border-blue-500 outline-none transition">
+                        <option value="">Select pass</option>
+                        <option value="Full Pass (Male)">Full Pass (Male) - 9800 RUB</option>
+                        <option value="Full Pass (Female)">Full Pass (Female) - 9800 RUB</option>
+                        <option value="Social Pass (Male)">Social Pass (Male) - 7200 RUB</option>
+                        <option value="Social Pass (Female)">Social Pass (Female) - 7200 RUB</option>
+                    </select>
+                </div>
+                <button type="submit" class="w-full py-5 bg-white text-black font-bold uppercase text-xs tracking-widest hover:bg-blue-600 hover:text-white transition-all duration-300">
+                    <span x-text="t('modal.submit')"></span>
+                </button>
+                <p x-show="formSuccess" x-cloak class="text-green-400 text-sm" x-text="t('modal.success')"></p>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function festivalApp() {
+            return {
+                lang: 'ru',
+                scrolled: false,
+                activeDay: 0,
+                showModal: false,
+                selectedPass: '',
+                selectedGender: {
+                    full: 'Male',
+                    social: 'Male'
+                },
+                formSuccess: false,
+                formData: {
+                    name: '',
+                    contact: ''
+                },
+                
+                openModal(passName) {
+                    const allowedPasses = ['Full Pass (Male)', 'Full Pass (Female)', 'Social Pass (Male)', 'Social Pass (Female)'];
+                    this.selectedPass = allowedPasses.includes(passName) ? passName : '';
+                    this.formSuccess = false;
+                    this.showModal = true;
+                },
+
+                openModalByType(passType, typeKey) {
+                    const gender = this.selectedGender[typeKey] || 'Male';
+                    this.openModal(`${passType} (${gender})`);
+                },
+
+                submitForm() {
+                    if (!this.formData.name || !this.formData.contact || !this.selectedPass) return;
+                    this.formSuccess = true;
+                    this.formData = { name: '', contact: '' };
+                    this.selectedPass = '';
+                },
+
+                t(path) {
+                    return path.split('.').reduce((o, i) => o[i], this.data[this.lang]);
+                },
+
+                data: {
+                    en: {
+                        nav: { schedule: 'Schedule', lineup: 'Line-up', passes: 'Passes', venue: 'Venue' },
+                        hero: {
+                            title: 'INFINITY',
+                            subtitle: 'KIZOMBA FESTIVAL MOSCOW',
+                            date: '3–5 April 2026',
+                            preparty: '2 April — Pre-party',
+                            cta: 'Get Pass',
+                            secondaryCta: 'View Schedule'
+                        },
+                        schedule: {
+                            note: 'Masterclass duration: 1 hour'
+                        },
+                        venue: {
+                            title: 'Venue',
+                            text: 'MonArch Hotel — premium location in Moscow with comfortable halls for workshops, socials and night parties.',
+                            mapCta: 'Open on Map',
+                            metroTitle: 'By metro',
+                            metroText: 'Dinamo station (Line 2), then 8–10 minutes walk along Leningradsky avenue.',
+                            carTitle: 'By car',
+                            carText: 'Easy access from TTK and Leningradsky avenue, follow signs to MonArch Hotel main entrance.',
+                            parkingTitle: 'Parking',
+                            parkingText: 'Hotel underground and ground parking is available, capacity is limited in evening hours.'
+                        },
+                        mobile: { cta: 'Book Now' },
+                        modal: { submit: 'Send Request', success: 'Request sent. We will contact you shortly.' },
+                        about: {
+                            heading: 'Where Elegance <br> Meets the Street.',
+                            text: 'Experience the premium fusion of urban style and sensual flow in the heart of Moscow. Three days of absolute immersion.'
+                        },
+                        lineup: { teachersTitle: 'Masters', djsTitle: 'Vibe Creators' }
+                    },
+                    ru: {
+                        nav: { schedule: 'Расписание', lineup: 'Лайн-ап', passes: 'Билеты', venue: 'Локация' },
+                        hero: {
+                            title: 'INFINITY',
+                            subtitle: 'KIZOMBA FESTIVAL MOSCOW',
+                            date: '3–5 Апреля 2026',
+                            preparty: '2 Апреля — Pre-party',
+                            cta: 'Купить пасс',
+                            secondaryCta: 'Программа'
+                        },
+                        schedule: {
+                            note: 'Длительность каждого мастер-класса: 1 час'
+                        },
+                        venue: {
+                            title: 'Локация',
+                            text: 'MonArch Hotel — премиальная площадка в Москве с комфортными залами для мастер-классов, social room и ночных вечеринок.',
+                            mapCta: 'Открыть на карте',
+                            metroTitle: 'На метро',
+                            metroText: 'Станция «Динамо» (зелёная ветка), далее 8–10 минут пешком по Ленинградскому проспекту.',
+                            carTitle: 'На машине',
+                            carText: 'Удобный заезд с ТТК и Ленинградского проспекта, ориентир — главный вход MonArch Hotel.',
+                            parkingTitle: 'Парковка',
+                            parkingText: 'Доступна подземная и наземная парковка отеля, в вечернее время количество мест ограничено.'
+                        },
+                        mobile: { cta: 'Купить пасс' },
+                        modal: { submit: 'Отправить заявку', success: 'Заявка отправлена. Мы свяжемся с вами в ближайшее время.' },
+                        about: {
+                            heading: 'Где Элегантность <br> Встречается с Улицей.',
+                            text: 'Почувствуйте премиальное слияние урбан-стиля и чувственности в самом сердце Москвы. Три дня полного погружения.'
+                        },
+                        lineup: { teachersTitle: 'Мастера', djsTitle: 'Диджеи' }
+                    },
+                    content: {
+                        teachers: [
+                            { name: 'JP & Stephy', country: 'France', style: 'Urban Kiz', img: 'https://images.unsplash.com/photo-1547153760-18fc86324498?q=80&w=400' },
+                            { name: 'Dwe & Gaby', country: 'Netherlands', style: 'Tarraxo', img: 'https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?q=80&w=400' },
+                            { name: 'Jack & Sara', country: 'Spain', style: 'Urban Kiz', img: 'https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?q=80&w=400' },
+                            { name: 'Fred-Nelson', country: 'France', style: 'Douceur', img: 'https://images.unsplash.com/photo-1504609773096-104ff2c73ba4?q=80&w=400' }
+                        ],
+                        djs: [
+                            { name: 'DJ Lenhy', img: 'https://images.unsplash.com/photo-1571266028243-e4733b0f0bb1?q=80&w=200' },
+                            { name: 'DJ Lucas', img: 'https://images.unsplash.com/photo-1598387181032-a3103a2db5b3?q=80&w=200' },
+                            { name: 'DJ Shark', img: 'https://images.unsplash.com/photo-1516280440614-37939bbacd81?q=80&w=200' },
+                            { name: 'DJ Longchamp', img: 'https://images.unsplash.com/photo-1514525253361-bee8a19740c1?q=80&w=200' },
+                            { name: 'DJ Stefanio', img: 'https://images.unsplash.com/photo-1493225255756-d9584f8606e9?q=80&w=200' },
+                            { name: 'DJ Pingusso', img: 'https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?q=80&w=200' }
+                        ],
+                        schedule: [
+                            {
+                                en: { dayName: 'Friday', events: [
+                                    { time: '12:00', title: 'JP & Stephy — Urban Kiz Foundations', desc: '60 min · Hall A' },
+                                    { time: '13:00', title: 'Dwe & Gaby — Tarraxo Texture', desc: '60 min · Hall A' },
+                                    { time: '14:00', title: 'Jack & Sara — Musicality & Flow', desc: '60 min · Hall B' },
+                                    { time: '15:00', title: 'Fred-Nelson — Douceur Body Control', desc: '60 min · Hall B' },
+                                    { time: '16:00', title: 'JP & Stephy + Dwe & Gaby — Connection Lab', desc: '60 min · Hall A' }
+                                ] },
+                                ru: { dayName: 'Пятница', events: [
+                                    { time: '12:00', title: 'JP & Stephy — База Urban Kiz', desc: '60 мин · Зал A' },
+                                    { time: '13:00', title: 'Dwe & Gaby — Текстура Tarraxo', desc: '60 мин · Зал A' },
+                                    { time: '14:00', title: 'Jack & Sara — Музыкальность и Flow', desc: '60 мин · Зал B' },
+                                    { time: '15:00', title: 'Fred-Nelson — Контроль тела в Douceur', desc: '60 мин · Зал B' },
+                                    { time: '16:00', title: 'JP & Stephy + Dwe & Gaby — Лаборатория коннекта', desc: '60 мин · Зал A' }
+                                ] }
+                            },
+                            {
+                                en: { dayName: 'Saturday', events: [
+                                    { time: '12:00', title: 'Jack & Sara — Urban Kiz Dynamics', desc: '60 min · Hall A' },
+                                    { time: '13:00', title: 'Fred-Nelson — Douceur Connection', desc: '60 min · Hall A' },
+                                    { time: '14:00', title: 'Dwe & Gaby — Tarraxo Footwork', desc: '60 min · Hall B' },
+                                    { time: '15:00', title: 'JP & Stephy — Social Combo Lab', desc: '60 min · Hall B' },
+                                    { time: '16:00', title: 'All Teachers — Battle Strategy Workshop', desc: '60 min · Hall A' }
+                                ] },
+                                ru: { dayName: 'Суббота', events: [
+                                    { time: '12:00', title: 'Jack & Sara — Динамика Urban Kiz', desc: '60 мин · Зал A' },
+                                    { time: '13:00', title: 'Fred-Nelson — Коннект в Douceur', desc: '60 мин · Зал A' },
+                                    { time: '14:00', title: 'Dwe & Gaby — Футворк Tarraxo', desc: '60 мин · Зал B' },
+                                    { time: '15:00', title: 'JP & Stephy — Social Combo Lab', desc: '60 мин · Зал B' },
+                                    { time: '16:00', title: 'Все преподаватели — Стратегия баттлов', desc: '60 мин · Зал A' }
+                                ] }
+                            },
+                            {
+                                en: { dayName: 'Sunday', events: [
+                                    { time: '12:00', title: 'JP & Stephy — Styling for Leaders & Followers', desc: '60 min · Hall A' },
+                                    { time: '13:00', title: 'Dwe & Gaby — Musical Breaks in Tarraxo', desc: '60 min · Hall A' },
+                                    { time: '14:00', title: 'Jack & Sara — TangoKiz Transitions', desc: '60 min · Hall B' },
+                                    { time: '15:00', title: 'Fred-Nelson — Smooth Flow & Control', desc: '60 min · Hall B' },
+                                    { time: '16:00', title: 'All Teachers — Closing Masterclass', desc: '60 min · Hall A' }
+                                ] },
+                                ru: { dayName: 'Воскресенье', events: [
+                                    { time: '12:00', title: 'JP & Stephy — Стилизация для лидеров и фолловеров', desc: '60 мин · Зал A' },
+                                    { time: '13:00', title: 'Dwe & Gaby — Музыкальные акценты в Tarraxo', desc: '60 мин · Зал A' },
+                                    { time: '14:00', title: 'Jack & Sara — Переходы в TangoKiz', desc: '60 мин · Зал B' },
+                                    { time: '15:00', title: 'Fred-Nelson — Плавность и контроль', desc: '60 мин · Зал B' },
+                                    { time: '16:00', title: 'Все преподаватели — Закрывающий мастер-класс', desc: '60 мин · Зал A' }
+                                ] }
+                            }
+                        ],
+                        dresscode: [
+                            { day: 'Thursday', title: 'Blue & Sky', colors: ['#87CEEB', '#C0C0C0', '#FFFFFF'], img: 'https://images.unsplash.com/photo-1539109136881-3be0616acf4b?q=80&w=600' },
+                            { day: 'Friday', title: 'Midnight Hollywood', colors: ['#000000', '#D4AF37', '#8B0000'], img: 'https://images.unsplash.com/photo-1492707892479-7bc8d5a4ee93?q=80&w=600' },
+                            { day: 'Saturday', title: 'Glossy Diamond', colors: ['#000000', '#E5E4E2', '#B9F2FF'], img: 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?q=80&w=600' },
+                            { day: 'Sunday', title: 'Boho Chic', colors: ['#F5F5DC', '#D2B48C', '#FFFDD0'], img: 'https://images.unsplash.com/photo-1496747611176-843222e1e57c?q=80&w=600' }
+                        ]
+                    }
+                }
+            }
+        }
+    </script>
+</body>
+</html>
